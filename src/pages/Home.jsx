@@ -6,16 +6,18 @@ import {
     Typography,
 } from '@mui/material'
 import React, { useState } from 'react'
-import { useMutation } from 'react-query'
 import { toast } from 'react-toastify'
 import { fetcher } from '../util'
 import SearchIcon from '@mui/icons-material/Search'
 import { useNavigate } from 'react-router-dom'
+import { useMutation } from '@tanstack/react-query'
 function Home() {
     const [searchQuery, setSearchQuery] = useState('')
     const navigate = useNavigate()
 
-    const { mutate, isLoading } = useMutation(({ url }) => fetcher(url))
+    const { mutate, isLoading } = useMutation({
+        mutationFn: ({ url }) => fetcher(url),
+    })
     const handleSubmit = (e) => {
         e.preventDefault()
         mutate(

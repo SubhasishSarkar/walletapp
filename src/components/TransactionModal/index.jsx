@@ -2,8 +2,8 @@ import { Box, Chip, Modal, Paper, Tooltip, Typography } from '@mui/material'
 import React from 'react'
 import Divider from '@mui/material/Divider'
 
-import { useQuery } from 'react-query'
 import { fetcher } from '../../util'
+import { useQuery } from '@tanstack/react-query'
 const style = {
     position: 'absolute',
     top: '50%',
@@ -69,13 +69,12 @@ const Item = ({ label, value }) => {
 }
 
 function TransactionModal({ open, handleClose, tid }) {
-    const { data, isLoading, isFetching, error } = useQuery(
-        ['transaction', tid],
-        () => fetcher(`/transactions/${tid}`),
-        {
-            enabled: tid != '',
-        }
-    )
+    const { data, isLoading, isFetching, error } = useQuery({
+        queryKey: ['transaction', tid],
+        queryFn: () => fetcher(`/transactions/${tid}`),
+        enabled: tid != '',
+    })
+    if (isLoading) return <></>
     return (
         <div>
             <Modal
