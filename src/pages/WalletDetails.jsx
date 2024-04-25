@@ -6,7 +6,6 @@ import WalletDetailsView from '../components/Wallet/WalletDeatilsView'
 
 function WalletDetails() {
     const { id } = useParams()
-    // const loacation = useLocation()
 
     const { data, isLoading, isFetching, error } = useQuery(
         ['search', id],
